@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang = "sr">
+<meta charset =  "utf-8">
+<head>
+ <title> Application </title>
+ <style>
+  li{
+    border: 1px dotted green;
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    width: 12.4%;
+    height: 150%;
+  }
+  input{
+    margin-left: 2.15%;
+
+  }
+ </style>
+</head>
+<body>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+ <div data-ng-app = "myApp" ng-controller = "myCtr">
+  <ul>
+   <li ng-repeat = "x in list">{{x}} <span ng-click = "remove($index)">×</span></li>
+  </ul>
+  <p><input type = "text" placeholder = "Enter item here" ng-model = "newItem">
+     <button type = "button" ng-click = "addNew()">Add new</button>
+     <span>{{errorText}}</span>
+  </p>
+ </div>
+
+<script type = "text/javascript">
+ var app = angular.module("myApp", []).controller("myCtr", function($scope){
+   $scope.list = ['Tomato', 'Jam', 'Onions'];
+   $scope.addNew = function(){
+     $scope.errorText = "";
+     if(!$scope.newItem){
+       return;
+     }
+     if($scope.list.indexOf($scope.newItem) == -1){
+      $scope.list.push($scope.newItem);
+     }
+     else{
+       $scope.errorText = "Item is already in the list";
+     }
+   }
+   $scope.remove = function(x){
+     $scope.list.splice(x,1);
+   }
+ });
+</script>
+
+</body>
+</html>
