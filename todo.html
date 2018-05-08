@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang  = "sr">
+<meta charset = "utf-8">
+<head>
+ <title> List of stuff you need to do </title>
+</head>
+<body>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+ <div data-ng-app = "myApp" ng-controller = "myCtr">
+  <p><input type = "text" ng-model = "nextItem" placeholder="Add new item">
+      <button type = "button" ng-click = "addNew()">Add new! </button>
+      <span>{{errorText}}</span>
+  </p>
+  <ul>
+   <li ng-repeat = "x in list">{{x.value}}<span><input type = "checkbox" ng-model = "x.checked"></span></li>
+  </ul>
+  <button type = "button" ng-click = "removeChecked()">Remove checked items!</button>
+ </div>
+
+ <script type = "text/javascript">
+
+  angular.module("myApp", []).controller("myCtr", function($scope){
+    $scope.list = [{value: "Chocolate", checked: false}];
+    //$scope.listCheck = [];
+
+    $scope.addNew = function(){
+      $scope.errorText = "";
+      var found = false;
+
+      angular.forEach($scope.list, function(val){
+        if(val.value == $scope.nextItem){
+          found = true;
+        }
+      })
+
+      if(!$scope.nextItem){
+        $scope.errorText = "Cannot add empty element in the list"
+      }
+
+      else if(found){
+        $scope.errorText = "Selected item is already in the list";
+      }else{
+        $scope.list.push({value: $scope.nextItem, checked: false});
+      }
+
+    }
+
+    $scope.removeChecked = function(){
+      list1 = [];
+      list1 = $scope.list;
+      $scope.list = [];
+      angular.forEach(list1, function(val){
+        if(val.checked === false){
+          $scope.list.push({value: val.value, checked: false});
+        }
+      });
+    }
+
+  });
+ </script>
+
+</body>
+</html>
